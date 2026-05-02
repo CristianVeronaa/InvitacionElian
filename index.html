@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡El Gran Show de Elian!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+</head>
+
+<body>
+
+    <!-- PANTALLA DEL TEATRO (TELÓN) -->
+    <div id="theater-screen">
+        <div class="curtain left">
+            <div style="text-align: right; padding-right: 50px; color: var(--color-gold);">
+                <i class="fas fa-magic" style="font-size: 5rem; opacity: 0.5;"></i>
+            </div>
+            <div class="curtain-tie"></div>
+        </div>
+        
+        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4000; text-align: center; width: 100%; pointer-events: none;">
+            <h1 class="title-show" style="color: white; font-size: 2.5rem; text-shadow: 0 0 20px black;">¡EL SHOW VA A COMENZAR!</h1>
+            <p style="color: var(--color-gold); font-family: var(--font-show); letter-spacing: 5px; margin-top: 10px;">TOCA PARA ABRIR EL TELÓN</p>
+        </div>
+
+        <div class="curtain right">
+            <div style="text-align: left; padding-left: 50px; color: var(--color-gold);">
+                <i class="fas fa-star" style="font-size: 5rem; opacity: 0.5;"></i>
+            </div>
+            <div class="curtain-tie"></div>
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="bg-music" loop>
+        <source src="assets/music.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        document.getElementById('theater-screen').addEventListener('click', function() {
+            this.classList.add('open');
+            const music = document.getElementById('bg-music');
+            if (music) music.play().catch(e => console.log("Play blocked"));
+            
+            setTimeout(() => {
+                window.location.href = 'invitacion.html';
+            }, 1500);
+        });
+    </script>
+</body>
+
+</html>

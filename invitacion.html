@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bautizo de Elian</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+</head>
+
+<body>
+
+    <div class="boutique-container">
+        
+        <!-- Formas orgánicas de fondo -->
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+
+        <!-- HERO EN FORMA DE ARCO -->
+        <div class="hero-arch-container fade-up">
+            <i class="fas fa-star star-deco s1"></i>
+            <i class="fas fa-star star-deco s2"></i>
+            
+            <div class="arch-frame">
+                <div class="arch-image">
+                    <img src="assets/hero_elian.png" alt="Elian">
+                </div>
+            </div>
+            
+            <h1 class="name-title">Elian</h1>
+            <p class="subtitle-chic">Mi Bautizo</p>
+        </div>
+
+        <div class="content-wrapper">
+            
+            <!-- PADRES Y PADRINOS -->
+            <div class="boutique-card fade-up">
+                <h3 class="card-title">Mis Padres</h3>
+                <p class="card-text">Juan Jose Cristalinas Ramirez</p>
+                <p class="card-text">Alba Karen Elizalde Servin</p>
+                
+                <div class="line-divider"></div>
+
+                <h3 class="card-title" style="color: var(--color-red);">Mis Padrinos</h3>
+                <p class="card-text">Andrea Cristalinas Ramirez</p>
+                <p class="card-text">Edgardo Sanchez Garcia</p>
+            </div>
+
+            <!-- FECHA / TIMER BOUTIQUE -->
+            <div class="boutique-card fade-up">
+                <h3 class="card-title" style="color: var(--color-text); margin-bottom: 5px;">Sábado 11 de Abril</h3>
+                <p style="color: #888; letter-spacing: 3px; font-size: 0.8rem;">2026</p>
+                
+                <div class="countdown-minimal" id="countdown">
+                    <div class="time-circle">
+                        <span class="t-num" id="days">00</span>
+                        <span class="t-lbl">DÍAS</span>
+                    </div>
+                    <div class="time-circle" style="border-color: var(--color-blue);">
+                        <span class="t-num" id="hours">00</span>
+                        <span class="t-lbl">HRS</span>
+                    </div>
+                    <div class="time-circle" style="border-color: var(--color-yellow);">
+                        <span class="t-num" id="minutes">00</span>
+                        <span class="t-lbl">MIN</span>
+                    </div>
+                    <div class="time-circle" style="border-color: var(--color-red);">
+                        <span class="t-num" id="seconds">00</span>
+                        <span class="t-lbl">SEG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UBICACIÓN LIMPIA -->
+            <div class="boutique-card fade-up" style="background: transparent; border: 1px solid var(--color-yellow); box-shadow: none;">
+                <div class="location-box">
+                    <i class="far fa-map"></i>
+                    <h3 class="location-text">El Escenario</h3>
+                    <p style="font-size: 0.95rem; color: #666; line-height: 1.5;">La ubicación de la iglesia y la recepción se revelarán muy pronto.</p>
+                </div>
+            </div>
+
+            <!-- RSVP -->
+            <a href="#" id="rsvp-btn" class="btn-chic fade-up">
+                Confirmar Asistencia
+            </a>
+
+            <!-- FOOTER -->
+            <div class="footer-chic fade-up">
+                <p>Con Amor, Elian y Familia</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- AUDIO CONTROL -->
+    <div class="music-control" id="music-toggle">
+        <i class="fas fa-music"></i>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="assets/music.mp3" type="audio/mp3">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
