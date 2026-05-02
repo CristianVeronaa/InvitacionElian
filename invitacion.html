@@ -4,107 +4,1178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bautizo de Elian</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <title>Bautizo y 1 Año de Elian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --paper: #FFFCF7;
+            --red: #E8736A;
+            --red-d: #C95A52;
+            --gold: #F5C842;
+            --gold-d: #C9A020;
+            --blue: #7BB8D4;
+            --blue-d: #5A9AB8;
+            --mint: #8ECFB8;
+            --lav: #C4A8D8;
+            --peach: #F5A97A;
+            --text: #2C1810;
+            --text-sm: #7A5C50;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* ━━━ MARQUESINA FIJA ━━━ */
+        .marquee-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            z-index: 200;
+            background: var(--red);
+            border-bottom: 4px solid var(--gold);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            overflow: hidden;
+        }
+
+        .mbulb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin: 0 6px;
+            animation: blinkBulb 2s ease-in-out infinite;
+        }
+
+        @keyframes blinkBulb {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .25
+            }
+        }
+
+        /* ━━━ FONDO GENERAL ━━━ */
+        /* Fondo crema con patrón sutil de puntos */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-color: var(--cream);
+            background-image: radial-gradient(circle, rgba(232, 115, 106, 0.08) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        /* ━━━ WRAPPER ━━━ */
+        .wrap {
+            max-width: 480px;
+            margin: 0 auto;
+            padding-top: 44px;
+            padding-bottom: 60px;
+        }
+
+        /* ━━━ HERO — FOTO PROTAGONISTA ━━━ */
+        .hero {
+            position: relative;
+            width: 100%;
+            padding-bottom: 32px;
+            text-align: center;
+            overflow: visible;
+        }
+
+        /* Cenefa scallop superior */
+        .hero-valance {
+            width: 100%;
+            display: block;
+            margin-bottom: -4px;
+        }
+
+        /* Marco de la foto — forma de arco de circo */
+        .photo-stage {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Halo de luz detrás de la foto */
+        .photo-halo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 115%;
+            height: 115%;
+            border-radius: 50% 50% 0 0;
+            background: radial-gradient(ellipse, rgba(245, 200, 66, 0.35) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Marco decorativo SVG alrededor de la foto */
+        .photo-frame-svg {
+            position: absolute;
+            inset: -18px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .photo-img-wrap {
+            position: relative;
+            z-index: 1;
+            width: 280px;
+            height: 360px;
+            border-radius: 140px 140px 0 0;
+            overflow: hidden;
+            border: 6px solid white;
+            box-shadow:
+                0 0 0 3px var(--gold),
+                0 20px 50px rgba(0, 0, 0, 0.18);
+        }
+
+        .photo-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        /* Estrellas orbitando la foto — CSS puro */
+        .orbit-wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .orbit-star {
+            position: absolute;
+            transform-origin: 0 0;
+        }
+
+        .orbit-star svg {
+            width: 22px;
+            height: 22px;
+            animation: orbitSpin 6s linear infinite;
+        }
+
+        .orbit-star:nth-child(1) {
+            animation: orbitPos1 6s linear infinite;
+        }
+
+        .orbit-star:nth-child(2) {
+            animation: orbitPos2 6s linear infinite;
+        }
+
+        .orbit-star:nth-child(3) {
+            animation: orbitPos3 6s linear infinite;
+        }
+
+        .orbit-star:nth-child(4) {
+            animation: orbitPos4 6s linear infinite;
+        }
+
+        @keyframes orbitPos1 {
+            from {
+                transform: rotate(0deg) translateX(175px) rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg) translateX(175px) rotate(-360deg);
+            }
+        }
+
+        @keyframes orbitPos2 {
+            from {
+                transform: rotate(90deg) translateX(175px) rotate(-90deg);
+            }
+
+            to {
+                transform: rotate(450deg) translateX(175px) rotate(-450deg);
+            }
+        }
+
+        @keyframes orbitPos3 {
+            from {
+                transform: rotate(180deg) translateX(175px) rotate(-180deg);
+            }
+
+            to {
+                transform: rotate(540deg) translateX(175px) rotate(-540deg);
+            }
+        }
+
+        @keyframes orbitPos4 {
+            from {
+                transform: rotate(270deg) translateX(175px) rotate(-270deg);
+            }
+
+            to {
+                transform: rotate(630deg) translateX(175px) rotate(-630deg);
+            }
+        }
+
+        /* Nombre del bebé */
+        .hero-name {
+            font-family: 'Fredoka One', cursive;
+            font-size: 4.5rem;
+            color: var(--red);
+            letter-spacing: 2px;
+            line-height: 1;
+            margin-top: 18px;
+            text-shadow: 3px 3px 0 rgba(201, 90, 82, 0.2);
+        }
+
+        .hero-event-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .hero-tag {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 100px;
+            border: 2px solid currentColor;
+        }
+
+        .tag-bautizo {
+            color: var(--blue-d);
+            background: rgba(123, 184, 212, 0.15);
+        }
+
+        .tag-anio {
+            color: var(--red-d);
+            background: rgba(232, 115, 106, 0.12);
+        }
+
+        .hero-sep {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        /* ━━━ BANDERINES ━━━ */
+        .bunting-wrap {
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+
+        .bunting-wrap svg {
+            width: 100%;
+            display: block;
+        }
+
+        /* ━━━ SECCIONES ━━━ */
+        .sections {
+            padding: 0 22px;
+        }
+
+        /* Tarjeta base */
+        .card {
+            background: var(--paper);
+            border-radius: 20px;
+            padding: 32px 26px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 24px rgba(44, 24, 16, 0.07);
+            border: 1.5px solid rgba(245, 200, 66, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Franja lateral de color */
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 16px;
+            bottom: 16px;
+            width: 5px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .card-red::before {
+            background: var(--red);
+        }
+
+        .card-blue::before {
+            background: var(--blue);
+        }
+
+        .card-gold::before {
+            background: var(--gold);
+        }
+
+        .card-mint::before {
+            background: var(--mint);
+        }
+
+        .card-lav::before {
+            background: var(--lav);
+        }
+
+        /* Sello decorativo en la esquina */
+        .card-seal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Título de sección */
+        .sec-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            line-height: 1.1;
+        }
+
+        .sec-sub {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-sm);
+            margin-bottom: 20px;
+        }
+
+        /* ── Nombres ── */
+        .name-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .name-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(44, 24, 16, 0.1);
+        }
+
+        .name-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .name-dot-wrap {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .name-content {
+            flex: 1;
+        }
+
+        .name-main {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .name-role-lbl {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-sm);
+        }
+
+        .divider-circus {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 16px 0;
+        }
+
+        .div-line {
+            flex: 1;
+            height: 1.5px;
+            background: rgba(44, 24, 16, 0.08);
+        }
+
+        .div-mid {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.78rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            padding: 0 6px;
+        }
+
+        /* ── Fecha ── */
+        .date-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 6px 0 22px;
+        }
+
+        .date-num {
+            font-family: 'Fredoka One', cursive;
+            font-size: 5rem;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .date-words {
+            display: flex;
+            flex-direction: column;
+            margin-left: 14px;
+            gap: 2px;
+        }
+
+        .date-month {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.6rem;
+            color: var(--blue-d);
+            line-height: 1;
+        }
+
+        .date-year-day {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-sm);
+        }
+
+        /* Cuenta regresiva */
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .cd-block {
+            text-align: center;
+            padding: 14px 4px;
+            border-radius: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cd-block::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.12;
+            border-radius: 14px;
+        }
+
+        .cd-block:nth-child(1) {
+            background: rgba(232, 115, 106, 0.1);
+            border: 1.5px solid var(--red);
+        }
+
+        .cd-block:nth-child(2) {
+            background: rgba(123, 184, 212, 0.1);
+            border: 1.5px solid var(--blue);
+        }
+
+        .cd-block:nth-child(3) {
+            background: rgba(142, 207, 184, 0.1);
+            border: 1.5px solid var(--mint);
+        }
+
+        .cd-block:nth-child(4) {
+            background: rgba(196, 168, 216, 0.1);
+            border: 1.5px solid var(--lav);
+        }
+
+        .cd-num {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.4rem;
+            line-height: 1;
+        }
+
+        .cd-block:nth-child(1) .cd-num {
+            color: var(--red);
+        }
+
+        .cd-block:nth-child(2) .cd-num {
+            color: var(--blue-d);
+        }
+
+        .cd-block:nth-child(3) .cd-num {
+            color: #4aab8a;
+        }
+
+        .cd-block:nth-child(4) .cd-num {
+            color: #9a74b8;
+        }
+
+        .cd-lbl {
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-sm);
+            margin-top: 4px;
+        }
+
+        .cd-ended {
+            text-align: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.4rem;
+            color: var(--red);
+            padding: 16px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .5
+            }
+        }
+
+        /* ── Ubicación ── */
+        .location-art {
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(123, 184, 212, 0.15), rgba(142, 207, 184, 0.15));
+            border: 1.5px dashed var(--blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Pin SVG */
+        .location-pin {
+            margin-bottom: 14px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .loc-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .loc-body {
+            font-size: 0.92rem;
+            color: var(--text-sm);
+            line-height: 1.65;
+        }
+
+        /* ── RSVP card ── */
+        .rsvp-note {
+            font-size: 0.95rem;
+            color: var(--text-sm);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        /* ─── Botón WhatsApp ─── */
+        .btn-wa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 24px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.32);
+            transition: transform .2s, box-shadow .2s;
+            text-decoration: none;
+        }
+
+        .btn-wa:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(37, 211, 102, 0.42);
+        }
+
+        .btn-wa:active {
+            transform: translateY(0);
+        }
+
+        /* ─── SVG WhatsApp ─── */
+        .wa-icon {
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+            fill: white;
+        }
+
+        /* ━━━ FOOTER ━━━ */
+        .footer {
+            text-align: center;
+            padding: 20px 20px 10px;
+        }
+
+        .footer-inner {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Corazones SVG */
+        .footer-hearts {
+            display: flex;
+            gap: 8px;
+        }
+
+        .heart-svg {
+            width: 22px;
+            height: 20px;
+        }
+
+        .footer-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            color: var(--red);
+            letter-spacing: 1px;
+        }
+
+        /* ━━━ CONTROL MÚSICA ━━━ */
+        .music-btn {
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            border: 2.5px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 300;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            transition: transform .2s;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .music-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ━━━ ANIMACIONES DE SCROLL ━━━ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .65s ease, transform .65s ease;
+        }
+
+        .fade-up.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Elementos ya visibles al cargar */
+        .fade-up.visible-now {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="boutique-container">
-        
-        <!-- Formas orgánicas de fondo -->
-        <div class="bg-shape shape-1"></div>
-        <div class="bg-shape shape-2"></div>
+    <!-- MARQUESINA FIJA -->
+    <div class="marquee-top" id="mTop"></div>
 
-        <!-- HERO EN FORMA DE ARCO -->
-        <div class="hero-arch-container fade-up">
-            <i class="fas fa-star star-deco s1"></i>
-            <i class="fas fa-star star-deco s2"></i>
-            
-            <div class="arch-frame">
-                <div class="arch-image">
-                    <img src="assets/hero_elian.png" alt="Elian">
+    <div class="wrap">
+
+        <!-- ─── HERO ─── -->
+        <div class="hero fade-up">
+
+            <!-- Cenefa superior del show -->
+            <svg class="hero-valance" viewBox="0 0 480 52" xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="vg2" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#E8736A" />
+                        <stop offset="100%" stop-color="#C95A52" />
+                    </linearGradient>
+                </defs>
+                <path
+                    d="M0,0 Q40,46 80,0 Q120,46 160,0 Q200,46 240,0 Q280,46 320,0 Q360,46 400,0 Q440,46 480,0 L480,0 L0,0 Z"
+                    fill="url(#vg2)" />
+                <path d="M0,0 Q40,46 80,0 Q120,46 160,0 Q200,46 240,0 Q280,46 320,0 Q360,46 400,0 Q440,46 480,0"
+                    fill="none" stroke="#F5C842" stroke-width="2" opacity="0.9" />
+                <circle cx="80" cy="4" r="5.5" fill="#F5C842" />
+                <circle cx="160" cy="4" r="5.5" fill="#F5C842" />
+                <circle cx="240" cy="4" r="5.5" fill="#F5C842" />
+                <circle cx="320" cy="4" r="5.5" fill="#F5C842" />
+                <circle cx="400" cy="4" r="5.5" fill="#F5C842" />
+                <circle cx="40" cy="38" r="4" fill="#F5A97A" />
+                <circle cx="120" cy="38" r="4" fill="#8ECFB8" />
+                <circle cx="200" cy="38" r="4" fill="#7BB8D4" />
+                <circle cx="280" cy="38" r="4" fill="#C4A8D8" />
+                <circle cx="360" cy="38" r="4" fill="#F5A97A" />
+                <circle cx="440" cy="38" r="4" fill="#8ECFB8" />
+            </svg>
+
+            <!-- Foto con marco -->
+            <div class="photo-stage">
+                <div class="photo-halo"></div>
+
+                <!-- Marco decorativo SVG -->
+                <svg class="photo-frame-svg" viewBox="0 0 316 396" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Arco del marco -->
+                    <path d="M30,360 L30,148 Q30,18 158,18 Q286,18 286,148 L286,360" fill="none" stroke="#F5C842"
+                        stroke-width="3" stroke-dasharray="12,7" />
+                    <!-- Esquinas floridas -->
+                    <circle cx="30" cy="360" r="9" fill="#E8736A" />
+                    <circle cx="286" cy="360" r="9" fill="#E8736A" />
+                    <circle cx="30" cy="148" r="7" fill="#F5C842" />
+                    <circle cx="286" cy="148" r="7" fill="#F5C842" />
+                    <!-- Bolas decorativas arriba del arco -->
+                    <circle cx="158" cy="18" r="10" fill="#F5C842" />
+                    <circle cx="100" cy="32" r="7" fill="#7BB8D4" />
+                    <circle cx="216" cy="32" r="7" fill="#8ECFB8" />
+                    <circle cx="55" cy="68" r="6" fill="#C4A8D8" />
+                    <circle cx="261" cy="68" r="6" fill="#F5A97A" />
+                    <!-- Estrellas en las esquinas -->
+                    <polygon points="10,330 14,318 18,330 30,330 21,337 24,349 14,342 4,349 7,337 -2,330" fill="#F5C842"
+                        opacity="0.8" />
+                    <polygon points="306,330 310,318 314,330 326,330 317,337 320,349 310,342 300,349 303,337 294,330"
+                        fill="#F5C842" opacity="0.8" />
+                </svg>
+
+                <div class="photo-img-wrap">
+                    <img src="BEBÉ.jpeg" alt="Elian" onerror="this.onerror=null; this.src='assets/hero_elian.png'">
+                </div>
+
+                <!-- Estrellas orbitando -->
+                <div class="orbit-wrap" style="top:50%;left:50%;">
+                    <div class="orbit-star">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#F5C842" />
+                        </svg>
+                    </div>
+                    <div class="orbit-star">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#E8736A" />
+                        </svg>
+                    </div>
+                    <div class="orbit-star">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#7BB8D4" />
+                        </svg>
+                    </div>
+                    <div class="orbit-star">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#8ECFB8" />
+                        </svg>
+                    </div>
                 </div>
             </div>
-            
-            <h1 class="name-title">Elian</h1>
-            <p class="subtitle-chic">Mi Bautizo</p>
+
+            <h1 class="hero-name">Elian</h1>
+
+            <div class="hero-event-row">
+                <span class="hero-tag tag-bautizo">Bautizo</span>
+                <div class="hero-sep"></div>
+                <span class="hero-tag tag-anio">1 A&ntilde;o</span>
+            </div>
         </div>
 
-        <div class="content-wrapper">
-            
-            <!-- PADRES Y PADRINOS -->
-            <div class="boutique-card fade-up">
-                <h3 class="card-title">Mis Padres</h3>
-                <p class="card-text">Juan Jose Cristalinas Ramirez</p>
-                <p class="card-text">Alba Karen Elizalde Servin</p>
-                
-                <div class="line-divider"></div>
+        <!-- ─── BANDERINES ─── -->
+        <div class="bunting-wrap fade-up" style="margin: 8px 0 24px;">
+            <svg viewBox="0 0 480 50" xmlns="http://www.w3.org/2000/svg">
+                <!-- Hilo -->
+                <line x1="0" y1="8" x2="480" y2="8" stroke="#C9A020" stroke-width="1.5" />
+                <!-- Banderas triángulo -->
+                <polygon points="20,8  50,8  35,44" fill="#E8736A" />
+                <polygon points="60,8  90,8  75,44" fill="#F5C842" />
+                <polygon points="100,8 130,8 115,44" fill="#7BB8D4" />
+                <polygon points="140,8 170,8 155,44" fill="#8ECFB8" />
+                <polygon points="180,8 210,8 195,44" fill="#C4A8D8" />
+                <polygon points="220,8 250,8 235,44" fill="#F5A97A" />
+                <polygon points="260,8 290,8 275,44" fill="#E8736A" />
+                <polygon points="300,8 330,8 315,44" fill="#F5C842" />
+                <polygon points="340,8 370,8 355,44" fill="#7BB8D4" />
+                <polygon points="380,8 410,8 395,44" fill="#8ECFB8" />
+                <polygon points="420,8 450,8 435,44" fill="#C4A8D8" />
+                <!-- Nodos de la cuerda -->
+                <circle cx="20" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="60" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="100" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="140" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="180" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="220" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="260" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="300" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="340" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="380" cy="8" r="3.5" fill="#C9A020" />
+                <circle cx="420" cy="8" r="3.5" fill="#C9A020" />
+            </svg>
+        </div>
 
-                <h3 class="card-title" style="color: var(--color-red);">Mis Padrinos</h3>
-                <p class="card-text">Andrea Cristalinas Ramirez</p>
-                <p class="card-text">Edgardo Sanchez Garcia</p>
-            </div>
+        <div class="sections">
 
-            <!-- FECHA / TIMER BOUTIQUE -->
-            <div class="boutique-card fade-up">
-                <h3 class="card-title" style="color: var(--color-text); margin-bottom: 5px;">Sábado 11 de Abril</h3>
-                <p style="color: #888; letter-spacing: 3px; font-size: 0.8rem;">2026</p>
-                
-                <div class="countdown-minimal" id="countdown">
-                    <div class="time-circle">
-                        <span class="t-num" id="days">00</span>
-                        <span class="t-lbl">DÍAS</span>
+            <!-- ─── PADRES & PADRINOS ─── -->
+            <div class="card card-red fade-up">
+                <div class="card-seal">
+                    <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22" cy="22" r="20" fill="rgba(232,115,106,0.12)" stroke="#E8736A" stroke-width="1.5"
+                            stroke-dasharray="5,4" />
+                        <path d="M22,14 C22,14 13,19 13,25 C13,29 17,32 22,32 C27,32 31,29 31,25 C31,19 22,14 22,14 Z"
+                            fill="#E8736A" opacity="0.6" />
+                    </svg>
+                </div>
+                <p class="sec-sub">Con el amor de</p>
+                <h2 class="sec-title" style="color:var(--red);">Familia</h2>
+
+                <p class="name-role-lbl" style="margin-bottom:10px; color:var(--blue-d);">Sus Pap&aacute;s</p>
+                <div class="name-list">
+                    <div class="name-item">
+                        <div class="name-dot-wrap" style="background:var(--blue);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                <path
+                                    d="M12 2C8.69 2 6 4.69 6 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" />
+                            </svg>
+                        </div>
+                        <div class="name-content">
+                            <div class="name-main">Juan Jose Cristalinas Ramirez</div>
+                        </div>
                     </div>
-                    <div class="time-circle" style="border-color: var(--color-blue);">
-                        <span class="t-num" id="hours">00</span>
-                        <span class="t-lbl">HRS</span>
+                    <div class="name-item">
+                        <div class="name-dot-wrap" style="background:var(--red);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                <path
+                                    d="M12 2C8.69 2 6 4.69 6 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z" />
+                            </svg>
+                        </div>
+                        <div class="name-content">
+                            <div class="name-main">Alba Karen Elizalde Servin</div>
+                        </div>
                     </div>
-                    <div class="time-circle" style="border-color: var(--color-yellow);">
-                        <span class="t-num" id="minutes">00</span>
-                        <span class="t-lbl">MIN</span>
+                </div>
+
+                <div class="divider-circus">
+                    <div class="div-line"></div>
+                    <span class="div-mid">Padrinos</span>
+                    <div class="div-line"></div>
+                </div>
+
+                <div class="name-list">
+                    <div class="name-item">
+                        <div class="name-dot-wrap" style="background:var(--mint);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                <path
+                                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z" />
+                            </svg>
+                        </div>
+                        <div class="name-content">
+                            <div class="name-main">Andrea Cristalinas Ramirez</div>
+                        </div>
                     </div>
-                    <div class="time-circle" style="border-color: var(--color-red);">
-                        <span class="t-num" id="seconds">00</span>
-                        <span class="t-lbl">SEG</span>
+                    <div class="name-item">
+                        <div class="name-dot-wrap" style="background:var(--gold-d);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                <path
+                                    d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z" />
+                            </svg>
+                        </div>
+                        <div class="name-content">
+                            <div class="name-main">Edgardo Sanchez Garcia</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- UBICACIÓN LIMPIA -->
-            <div class="boutique-card fade-up" style="background: transparent; border: 1px solid var(--color-yellow); box-shadow: none;">
-                <div class="location-box">
-                    <i class="far fa-map"></i>
-                    <h3 class="location-text">El Escenario</h3>
-                    <p style="font-size: 0.95rem; color: #666; line-height: 1.5;">La ubicación de la iglesia y la recepción se revelarán muy pronto.</p>
+            <!-- ─── FECHA & CUENTA REGRESIVA ─── -->
+            <div class="card card-gold fade-up">
+                <div class="card-seal">
+                    <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22" cy="22" r="20" fill="rgba(245,200,66,0.15)" stroke="#F5C842" stroke-width="1.5"
+                            stroke-dasharray="5,4" />
+                        <rect x="12" y="13" width="20" height="18" rx="3" fill="none" stroke="#C9A020"
+                            stroke-width="1.5" />
+                        <line x1="16" y1="11" x2="16" y2="16" stroke="#C9A020" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="28" y1="11" x2="28" y2="16" stroke="#C9A020" stroke-width="2"
+                            stroke-linecap="round" />
+                        <line x1="12" y1="20" x2="32" y2="20" stroke="#C9A020" stroke-width="1.5" />
+                    </svg>
+                </div>
+                <p class="sec-sub">Apunta la fecha</p>
+                <h2 class="sec-title" style="color:var(--gold-d);">El Gran D&iacute;a</h2>
+
+                <div class="date-display">
+                    <div class="date-num">20</div>
+                    <div class="date-words">
+                        <div class="date-month">Junio</div>
+                        <div class="date-year-day">2026 &nbsp;&bull;&nbsp; S&aacute;bado</div>
+                    </div>
+                </div>
+
+                <div class="countdown" id="countdown">
+                    <div class="cd-block">
+                        <div class="cd-num" id="cd-d">--</div>
+                        <div class="cd-lbl">D&iacute;as</div>
+                    </div>
+                    <div class="cd-block">
+                        <div class="cd-num" id="cd-h">--</div>
+                        <div class="cd-lbl">Horas</div>
+                    </div>
+                    <div class="cd-block">
+                        <div class="cd-num" id="cd-m">--</div>
+                        <div class="cd-lbl">Min</div>
+                    </div>
+                    <div class="cd-block">
+                        <div class="cd-num" id="cd-s">--</div>
+                        <div class="cd-lbl">Seg</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- RSVP -->
-            <a href="#" id="rsvp-btn" class="btn-chic fade-up">
-                Confirmar Asistencia
-            </a>
+            <!-- ─── UBICACIÓN ─── -->
+            <div class="card card-blue fade-up">
+                <p class="sec-sub">El escenario</p>
+                <h2 class="sec-title" style="color:var(--blue-d);">D&oacute;nde ser&aacute;</h2>
 
-            <!-- FOOTER -->
-            <div class="footer-chic fade-up">
-                <p>Con Amor, Elian y Familia</p>
+                <div class="location-art">
+                    <!-- Pin SVG custom -->
+                    <svg class="location-pin" width="48" height="56" viewBox="0 0 48 56"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="24" cy="53" rx="10" ry="3" fill="rgba(90,154,184,0.2)" />
+                        <path d="M24 2C14.06 2 6 10.06 6 20c0 13.5 18 34 18 34S42 33.5 42 20C42 10.06 33.94 2 24 2z"
+                            fill="#7BB8D4" />
+                        <path d="M24 2C14.06 2 6 10.06 6 20c0 13.5 18 34 18 34S42 33.5 42 20C42 10.06 33.94 2 24 2z"
+                            fill="none" stroke="#5A9AB8" stroke-width="1.5" />
+                        <circle cx="24" cy="20" r="9" fill="white" />
+                        <circle cx="24" cy="20" r="5.5" fill="#7BB8D4" />
+                    </svg>
+                    <div class="loc-title">Pr&oacute;ximamente</div>
+                    <p class="loc-body">La iglesia y el sal&oacute;n de la celebraci&oacute;n<br>se revelar&aacute;n muy
+                        pronto.<br>Sigue pendiente.</p>
+                </div>
             </div>
 
+            <!-- ─── RSVP ─── -->
+            <div class="card card-mint fade-up">
+                <div class="card-seal">
+                    <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="22" cy="22" r="20" fill="rgba(142,207,184,0.15)" stroke="#8ECFB8" stroke-width="1.5"
+                            stroke-dasharray="5,4" />
+                        <polyline points="14,22 20,28 30,16" fill="none" stroke="#4aab8a" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <p class="sec-sub">Confirma tu asistencia</p>
+                <h2 class="sec-title" style="color:#4aab8a;">No Faltes</h2>
+                <p class="rsvp-note">
+                    Tu presencia hace que este d&iacute;a sea a&uacute;n m&aacute;s especial. Av&iacute;sanos que nos
+                    acompa&ntilde;ar&aacute;s.
+                </p>
+                <a class="btn-wa" id="rsvpBtn" href="#">
+                    <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                    </svg>
+                    Confirmar Asistencia
+                </a>
+            </div>
+
+        </div>
+
+        <!-- ─── FOOTER ─── -->
+        <div class="footer fade-up">
+            <div class="footer-inner">
+                <!-- Corazones SVG en colores pastel -->
+                <div class="footer-hearts">
+                    <svg class="heart-svg" viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"
+                            fill="#E8736A" />
+                    </svg>
+                    <svg class="heart-svg" viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"
+                            fill="#7BB8D4" />
+                    </svg>
+                    <svg class="heart-svg" viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"
+                            fill="#8ECFB8" />
+                    </svg>
+                    <svg class="heart-svg" viewBox="0 0 24 22" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35z"
+                            fill="#F5C842" />
+                    </svg>
+                </div>
+                <p class="footer-text">Con Amor &mdash; Elian y Familia</p>
+            </div>
         </div>
 
     </div>
 
-    <!-- AUDIO CONTROL -->
-    <div class="music-control" id="music-toggle">
-        <i class="fas fa-music"></i>
+    <!-- Control de música -->
+    <div class="music-btn" id="musicBtn" title="Música">
+        <svg id="musicIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="var(--text)">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+        </svg>
     </div>
-    <audio id="bg-music" loop>
+
+    <audio id="bgMusic" loop>
         <source src="assets/music.mp3" type="audio/mp3">
     </audio>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Marquesina
+        const mTop = document.getElementById('mTop');
+        const bulbSeq = [
+            ['b-gold', '#F5C842', 'rgba(245,200,66,.7)'],
+            ['b-white', '#fff', 'rgba(255,255,255,.6)'],
+            ['b-peach', '#F5A97A', 'rgba(245,169,122,.6)'],
+            ['b-blue', '#7BB8D4', 'rgba(123,184,212,.6)'],
+            ['b-mint', '#8ECFB8', 'rgba(142,207,184,.5)'],
+        ];
+        for (let i = 0; i < 36; i++) {
+            const [, bg, sh] = bulbSeq[i % bulbSeq.length];
+            const b = document.createElement('div');
+            b.className = 'mbulb';
+            b.style.cssText = `background:${bg};box-shadow:0 0 7px 2px ${sh};animation-delay:${(i % 5) * 0.4}s`;
+            mTop.appendChild(b);
+        }
+
+        // Countdown
+        (function () {
+            const target = new Date("June 20, 2026 12:00:00").getTime();
+            const els = { d: document.getElementById('cd-d'), h: document.getElementById('cd-h'), m: document.getElementById('cd-m'), s: document.getElementById('cd-s') };
+            const cd = document.getElementById('countdown');
+            if (!els.d) return;
+            const pad = n => String(n).padStart(2, '0');
+            const tick = () => {
+                const diff = target - Date.now();
+                if (diff < 0) {
+                    clearInterval(iv);
+                    cd.innerHTML = '<div class="cd-ended">El show ya comenzo!</div>';
+                    return;
+                }
+                els.d.textContent = pad(Math.floor(diff / 86400000));
+                els.h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+                els.m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+                els.s.textContent = pad(Math.floor((diff % 60000) / 1000));
+            };
+            tick();
+            const iv = setInterval(tick, 1000);
+        })();
+
+        // Audio
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        let playing = false;
+        musicBtn.addEventListener('click', () => {
+            if (playing) {
+                music.pause();
+                musicIcon.innerHTML = '<path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>';
+            } else {
+                music.play();
+                musicIcon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+            }
+            playing = !playing;
+        });
+
+        // RSVP — número pendiente
+        document.getElementById('rsvpBtn').addEventListener('click', e => {
+            e.preventDefault();
+            alert('\u00a1Pronto compartiremos el n\u00famero de contacto para confirmar asistencia!');
+        });
+
+        // Scroll animations — mostrar inmediatamente los que ya est\u00e1n en pantalla
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+        }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
+        document.querySelectorAll('.fade-up').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add('in');
+            } else {
+                observer.observe(el);
+            }
+        });
+
+        // Confeti de bienvenida
+        window.addEventListener('load', () => {
+            if (typeof confetti !== 'function') return;
+            const colors = ['#E8736A', '#F5C842', '#7BB8D4', '#8ECFB8', '#C4A8D8', '#F5A97A'];
+            const fire = (r, o) => confetti({ origin: { y: 0.6 }, colors, particleCount: Math.floor(160 * r), ...o });
+            setTimeout(() => {
+                fire(0.3, { spread: 40, startVelocity: 55 });
+                fire(0.2, { spread: 70 });
+                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+                fire(0.15, { spread: 130, startVelocity: 25, decay: 0.92 });
+            }, 600);
+        });
+    </script>
 </body>
 
 </html>
