@@ -31,15 +31,19 @@
             --text-sm: #7A5C50;
         }
 
-        html {
-            scroll-behavior: smooth;
+        html,
+        body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
         }
 
         body {
             font-family: 'Nunito', sans-serif;
             background: var(--cream);
             color: var(--text);
-            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Suavizar scroll en iOS */
         }
 
         /* ━━━ MARQUESINA FIJA ━━━ */
@@ -1139,7 +1143,7 @@
     </div>
 
     <audio id="bgMusic" loop>
-        <source src="cancion.mp3" type="audio/mpeg">
+        <source src="cancion.mp3?v=1.1" type="audio/mpeg">
     </audio>
 
     <canvas id="cursorCanvas"
@@ -1160,26 +1164,18 @@
 
             class Particle {
                 constructor(x, y) {
-                    // Offset from cursor for wider initial spread
-                    this.x = x + (Math.random() - 0.5) * 30;
-                    this.y = y + (Math.random() - 0.5) * 30;
-                    // Much bigger particles (3 to 14px)
-                    this.size = Math.random() * 11 + 3;
-                    // Original size for calculating glow radius
-                    this.origSize = this.size;
-                    // Wider spread velocity
-                    this.speedX = (Math.random() - 0.5) * 6;
-                    this.speedY = (Math.random() - 0.5) * 6;
-                    // Slight gravity drift upward for magical feel
-                    this.gravity = -0.02 - Math.random() * 0.03;
+                    // Spread inicial
+                    this.x = x + (Math.random() - 0.5) * 25;
+                    this.y = y + (Math.random() - 0.5) * 25;
+                    this.size = Math.random() * 8 + 3;
+                    this.speedX = (Math.random() - 0.5) * 4;
+                    this.speedY = (Math.random() - 0.5) * 4;
+                    this.gravity = -0.01 - Math.random() * 0.02;
                     this.color = colors[Math.floor(Math.random() * colors.length)];
                     this.life = 1;
-                    // Slower decay = longer life = more diffused trails
-                    this.decay = Math.random() * 0.008 + 0.005;
-                    // Friction to slow particles over time
-                    this.friction = 0.985;
-                    // Glow intensity multiplier
-                    this.glowSize = 25 + Math.random() * 10;
+                    // Decay ligeramente más rápido para no acumular demasiadas
+                    this.decay = Math.random() * 0.015 + 0.01;
+                    this.friction = 0.96;
                 }
                 update() {
                     this.speedX *= this.friction;
@@ -1187,53 +1183,33 @@
                     this.x += this.speedX;
                     this.y += this.speedY + this.gravity;
                     this.life -= this.decay;
-                    // Shrink gently
-                    if (this.size > 0.3) this.size -= 0.03;
+                    if (this.size > 0.3) this.size -= 0.05;
                 }
                 draw() {
                     if (this.life <= 0) return;
 
-                    // Outer diffused glow ring (very large, very faint)
-                    ctx.save();
-                    ctx.globalAlpha = this.life * 0.12;
-                    ctx.shadowBlur = this.glowSize * 1.5;
-                    ctx.shadowColor = this.color;
+                    // OPTIMIZACIÓN: shadowBlur causa mucho lag. 
+                    // Usamos círculos con opacidad apilados para crear el brillo (es súper rápido)
+                    
+                    // Halo exterior (brillo suave)
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 2.2, 0, Math.PI * 2);
                     ctx.fillStyle = this.color;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+                    ctx.globalAlpha = this.life * 0.15;
                     ctx.fill();
-                    ctx.restore();
 
-                    // Middle glow ring
-                    ctx.save();
-                    ctx.globalAlpha = this.life * 0.25;
-                    ctx.shadowBlur = this.glowSize;
-                    ctx.shadowColor = this.color;
-                    ctx.fillStyle = this.color;
+                    // Halo medio (más intenso)
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 1.8, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, this.size * 1.3, 0, Math.PI * 2);
+                    ctx.globalAlpha = this.life * 0.4;
                     ctx.fill();
-                    ctx.restore();
 
-                    // Inner bright core
-                    ctx.save();
-                    ctx.globalAlpha = this.life * 0.7;
-                    ctx.shadowBlur = this.glowSize * 0.6;
-                    ctx.shadowColor = this.color;
-                    ctx.fillStyle = this.color;
+                    // Centro brillante (blanco/luz)
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.globalAlpha = this.life * 0.8;
                     ctx.fill();
-                    ctx.restore();
-
-                    // White-hot center spark
-                    ctx.save();
-                    ctx.globalAlpha = this.life * 0.5;
-                    ctx.fillStyle = 'rgba(255,255,255,0.8)';
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 0.3, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
                 }
             }
 
@@ -1251,7 +1227,8 @@
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX;
                 mouse.y = e.clientY;
-                for (let i = 0; i < 5; i++) {
+                // Reducimos a 2 partículas por movimiento para mantener fluidez
+                for (let i = 0; i < 2; i++) {
                     particles.push(new Particle(mouse.x, mouse.y));
                 }
             });
@@ -1259,7 +1236,7 @@
             window.addEventListener('touchmove', (e) => {
                 mouse.x = e.touches[0].clientX;
                 mouse.y = e.touches[0].clientY;
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 2; i++) {
                     particles.push(new Particle(mouse.x, mouse.y));
                 }
             });
@@ -1314,7 +1291,7 @@
             const iv = setInterval(tick, 1000);
         })();
 
-        // Audio
+        // Audio Logic
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         const musicIcon = document.getElementById('musicIcon');
@@ -1328,7 +1305,8 @@
             }
         }
 
-        musicBtn.addEventListener('click', () => {
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             if (playing) {
                 music.pause();
                 playing = false;
@@ -1339,23 +1317,28 @@
             updateMusicIcon();
         });
 
-        // Intentar autoplay
+        // Autoplay Fallback (Very Robust)
+        const startAudio = () => {
+            if (!playing) {
+                music.play().then(() => {
+                    playing = true;
+                    updateMusicIcon();
+                }).catch(() => {});
+            }
+            ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, startAudio));
+        };
+
+        ['click', 'touchstart', 'scroll'].forEach(evt => {
+            window.addEventListener(evt, startAudio, { once: true });
+        });
+
         window.addEventListener('load', () => {
             music.play().then(() => {
                 playing = true;
                 updateMusicIcon();
+                ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, startAudio));
             }).catch(e => {
-                console.log("Autoplay bloqueado:", e);
-                // Si el navegador bloquea el autoplay, esperamos un tap en cualquier parte para iniciarlo
-                document.body.addEventListener('click', function playOnFirstInteraction() {
-                    if (!playing) {
-                        music.play().then(() => {
-                            playing = true;
-                            updateMusicIcon();
-                        }).catch(() => {});
-                    }
-                    document.body.removeEventListener('click', playOnFirstInteraction);
-                }, { once: true });
+                console.log("Autoplay blocked, waiting for interaction...");
             });
         });
 
