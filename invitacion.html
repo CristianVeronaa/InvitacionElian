@@ -747,7 +747,7 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 5;
+            z-index: 150;
             overflow: hidden;
         }
 
@@ -759,6 +759,23 @@
             cursor: grab;
             user-select: none;
             touch-action: none;
+        }
+
+        .balloon.popping {
+            animation: none !important;
+            pointer-events: none;
+            transform: scale(1.4);
+            opacity: 0;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+        }
+
+        .pop-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
         }
 
         .balloon:active {
@@ -1383,30 +1400,18 @@
                 { fill: '#F5A97A', shine: '#FFC9A0', knot: '#D4804A' },
             ];
 
-            let lastLeft = -1;
-
             function makeBalloon(isInitial = false) {
                 const c = colors[Math.floor(Math.random() * colors.length)];
-                // Tamaños más variados: 30px a 100px
-                const size = 30 + Math.random() * 70;
-
-                // Evitar que salgan en el mismo lugar que el anterior
-                let left;
-                do {
-                    left = 5 + Math.random() * 90;
-                } while (lastLeft !== -1 && Math.abs(left - lastLeft) < 15);
-                lastLeft = left;
-
-                const dur = 10 + Math.random() * 15;
+                const size = 55 + Math.random() * 55;
+                const left = Math.random() * 88;
+                const dur = 12 + Math.random() * 10;
                 const delay = isInitial ? Math.random() * dur : 0;
                 const swayDur = 2 + Math.random() * 2;
+                const isPopper = Math.random() < 0.4;
 
                 const div = document.createElement('div');
                 div.className = 'balloon';
-                div.style.cssText =
-                    `left:${left}%;` +
-                    `animation-duration:${dur}s;` +
-                    (isInitial ? `animation-delay:-${delay}s;` : '');
+                div.style.cssText = `left:${left}%; animation-duration:${dur}s; ${isInitial ? `animation-delay:-${delay}s;` : ''}`;
 
                 const svgW = size;
                 const svgH = size * 1.7;
@@ -1417,83 +1422,93 @@
                 const strY = knotY + 6;
 
                 div.innerHTML = `
-            <svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}"
-                 xmlns="http://www.w3.org/2000/svg"
-                 style="animation-duration:${swayDur}s">
-              <ellipse cx="${cx}" cy="${ry}" rx="${rx}" ry="${ry}" fill="${c.fill}" opacity="0.9"/>
-              <ellipse cx="${cx - rx * 0.28}" cy="${ry * 0.38}" rx="${rx * 0.26}" ry="${ry * 0.22}" fill="${c.shine}" opacity="0.5"/>
-              <ellipse cx="${cx}" cy="${knotY}" rx="${size * 0.05}" ry="${size * 0.04}" fill="${c.knot}"/>
-              <path d="M${cx},${strY} Q${cx + size * 0.1},${strY + size * 0.2} ${cx - size * 0.1},${strY + size * 0.4} Q${cx + size * 0.05},${strY + size * 0.6} ${cx},${strY + size * 0.8}"
-                    fill="none" stroke="${c.knot}" stroke-width="1.2" opacity="0.6"/>
-            </svg>`;
+                    <svg width="${svgW}" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" style="animation-duration:${swayDur}s">
+                        <ellipse cx="${cx}" cy="${ry}" rx="${rx}" ry="${ry}" fill="${c.fill}" opacity="0.9"/>
+                        <ellipse cx="${cx - rx * 0.28}" cy="${ry * 0.38}" rx="${rx * 0.26}" ry="${ry * 0.22}" fill="${c.shine}" opacity="0.5"/>
+                        <ellipse cx="${cx}" cy="${knotY}" rx="${size * 0.05}" ry="${size * 0.04}" fill="${c.knot}"/>
+                        <path d="M${cx},${strY} Q${cx + size * 0.1},${strY + size * 0.2} ${cx - size * 0.1},${strY + size * 0.4} Q${cx + size * 0.05},${strY + size * 0.6} ${cx},${strY + size * 0.8}" fill="none" stroke="${c.knot}" stroke-width="1.2" opacity="0.6"/>
+                    </svg>`;
 
-                // Lógica de arrastre interactivo
+                // Usamos Pointer Events (funciona en mouse Y touch)
                 let isDragging = false;
-                let startX, startY, startLeft, startBottom;
+                let startX = 0, startY = 0;
+                let accX = 0, accY = 0; // posición acumulada entre arrastres
 
                 div.addEventListener('pointerdown', (e) => {
+                    // Si es globo explosivo, explotar y salir
+                    if (isPopper) {
+                        popBalloon(div, c.fill);
+                        return;
+                    }
+
+                    e.preventDefault();
                     isDragging = true;
-                    div.setPointerCapture(e.pointerId);
+                    div.setPointerCapture(e.pointerId); // captura el puntero → no se pierde aunque salga del elemento
                     div.style.animationPlayState = 'paused';
+                    div.style.cursor = 'grabbing';
                     div.style.zIndex = '1000';
 
-                    const rect = div.getBoundingClientRect();
-                    startX = e.clientX;
-                    startY = e.clientY;
-
-                    // Calculamos la posición actual para moverlo desde ahí
-                    const computedStyle = window.getComputedStyle(div);
-                    const matrix = new WebKitCSSMatrix(computedStyle.transform);
-
-                    div.addEventListener('pointermove', onPointerMove);
+                    startX = e.clientX - accX;
+                    startY = e.clientY - accY;
                 });
 
-                function onPointerMove(e) {
+                div.addEventListener('pointermove', (e) => {
                     if (!isDragging) return;
-                    const dx = e.clientX - startX;
-                    const dy = e.clientY - startY;
+                    e.preventDefault();
+                    accX = e.clientX - startX;
+                    accY = e.clientY - startY;
+                    div.style.transform = `translate(${accX}px, ${accY}px)`;
+                });
 
-                    // Usamos transform para moverlo suavemente sin romper el layout
-                    div.style.transform = `translate(${dx}px, ${dy}px)`;
-                }
-
-                div.addEventListener('pointerup', (e) => {
+                div.addEventListener('pointerup', () => {
                     if (!isDragging) return;
                     isDragging = false;
-                    div.releasePointerCapture(e.pointerId);
-                    div.removeEventListener('pointermove', onPointerMove);
+                    div.style.cursor = 'grab';
+                    div.style.zIndex = '150';
+                    div.style.animationPlayState = 'running';
+                });
 
-                    // Efecto de "impulso" al soltar
-                    div.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                    div.style.transform = 'translate(0, 0)';
-
-                    // Aplicar la nueva posición horizontal si se movió mucho
-                    const rect = div.getBoundingClientRect();
-                    const newLeft = (rect.left / window.innerWidth) * 100;
-                    div.style.left = `${newLeft}%`;
-
-                    setTimeout(() => {
-                        div.style.transition = 'none';
-                        div.style.animationPlayState = 'running';
-                        div.style.zIndex = '5';
-                    }, 400);
+                div.addEventListener('pointercancel', () => {
+                    isDragging = false;
+                    div.style.cursor = 'grab';
+                    div.style.zIndex = '150';
+                    div.style.animationPlayState = 'running';
                 });
 
                 layer.appendChild(div);
-
-                // Eliminar del DOM al terminar la animación para no saturar
-                if (!isInitial) {
-                    setTimeout(() => {
-                        if (!isDragging) div.remove();
-                    }, dur * 1000);
-                }
             }
 
-            // Crear batch inicial spread out
-            for (let i = 0; i < 6; i++) makeBalloon(true);
+            function popBalloon(balloon, color) {
+                const rect = balloon.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
 
-            // Generar nuevos globos periódicamente
-            setInterval(() => makeBalloon(false), 4000);
+                balloon.classList.add('popping');
+
+                for (let i = 0; i < 10; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'pop-particle';
+                    p.style.cssText = `background:${color}; left:${centerX}px; top:${centerY}px;`;
+
+                    const angle = (i / 10) * Math.PI * 2;
+                    const dist = 50 + Math.random() * 60;
+                    const tx = Math.cos(angle) * dist;
+                    const ty = Math.sin(angle) * dist;
+
+                    p.animate([
+                        { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                        { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+                    ], { duration: 450, easing: 'ease-out' });
+
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 450);
+                }
+
+                setTimeout(() => balloon.remove(), 200);
+            }
+
+            for (let i = 0; i < 7; i++) makeBalloon(true);
+            setInterval(() => makeBalloon(false), 3500);
         })();
     </script>
 </body>
