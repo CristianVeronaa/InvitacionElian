@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 1. CUENTA REGRESIVA
 function initCountdown() {
-    const countdownDate = new Date("April 11, 2026 12:00:00").getTime();
+    const countdownDate = new Date("July 26, 2026 12:00:00").getTime();
     const elements = {
         d: document.getElementById('days'),
         h: document.getElementById('hours'),
@@ -70,7 +70,7 @@ function initRSVP() {
 
     rsvpBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const phone = "525512345678"; 
+        const phone = "525512345678";
         const message = encodeURIComponent(`¡Hola! Confirmo mi asistencia al gran show del bautizo de Elian. ¡Muchas gracias!`);
         window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
     });
